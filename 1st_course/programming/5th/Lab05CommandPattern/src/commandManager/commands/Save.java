@@ -1,0 +1,38 @@
+package commandManager.commands;
+
+import commandManager.Command;
+import dataClasses.LabWork;
+import dataClasses.LabWorkSet;
+
+import java.io.File;
+
+public class Save extends Command {
+
+    public Save(){
+        super(false);
+    }
+
+    @Override
+    public void execute() {
+        var str = "";
+
+//        String filename = filenameDATALabWorks; // Путь к вашему файлу
+
+        var filename = System.getProperty("PATH_TO_CSV");
+
+        var file = new File(filename);
+        file.delete();
+        LabWorkUtility.writeStrToFilename("id,name,coordinates_x,coordinates_y,creationDate,minimalPoint,difficulty,author_name,author_birthday,author_height,author_passportID\n", filename);
+
+        for (LabWork element : LabWorkSet.labWorks) {
+            str = str + element.getString() + "\n";
+        }
+        LabWorkUtility.writeStrToFilename(str, filename);
+
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+}
